@@ -19,6 +19,9 @@ import { CartItemModel } from 'src/app/models/cart-item-model';
 import { CarritoService } from 'src/app/services/carrito.service';
 import { FavoritoService } from 'src/app/services/favorito.service';
 import { Favorite } from 'src/app/models/favorite.model';
+import { ColorService } from 'src/app/services/color.service';
+import { SelectorMatcher } from '@angular/compiler';
+import { SelectorService } from 'src/app/services/selector.service';
 
 declare var jQuery:any;
 declare var $:any;
@@ -47,6 +50,8 @@ export class ProductComponent implements OnInit {
 
   public producto: Producto;
   categories: Categoria[];
+  public colores : any = [];
+  public selectores : any = [];
 
   public usuario: Usuario;
   public imagenSubir: File;
@@ -63,6 +68,7 @@ export class ProductComponent implements OnInit {
   public galerias : any ;
   public galeria : Array<any> = [];
   public select_producto;
+  public nombre_selector:any;
   public first_img;
 
   public slug;
@@ -91,6 +97,8 @@ export class ProductComponent implements OnInit {
     private galeriaService : GaleriaService,
     private _carritoService : CarritoService,
     public favoritoService: FavoritoService,
+    public _colorService: ColorService,
+    public _selectorService: SelectorService,
     handler: HttpBackend,
     private _sanitizer: DomSanitizer
     ) {
@@ -108,6 +116,7 @@ export class ProductComponent implements OnInit {
 
     this.activatedRoute.params.subscribe( ({id}) => this.cargarProducto(id));
     this.activatedRoute.params.subscribe( ({id}) => this.get_galeria(id));
+    this.activatedRoute.params.subscribe( ({id}) => this.listConfig(id));
     window.scrollTo(0, 0);
     // this.getGallery();
     this.obtenerCategorias();
@@ -122,19 +131,54 @@ export class ProductComponent implements OnInit {
       )
     }
 
+    get_color(event,color){
+      this.color_to_cart = color.color;
+  
+  
+    }
+
 
     cargarProducto(_id: string){
 
       this.productoService.getProductoById(_id).subscribe(
         resp=>{
-          this.productoSeleccionado = resp;
-          console.log(this.productoSeleccionado);
+          this.producto = resp;
+          console.log(resp);
         }
       )
 
+      // this.precio_to_cart = this.productoSeleccionado.precio_ahora;
 
+      
 
     }
+
+    listConfig(_id: string){
+      this._colorService.colorByProduct(_id).subscribe(
+        response =>{
+          this.colores = response;
+          this.color_to_cart = this.colores[0].color;
+          console.log(response);
+  
+        },
+        error=>{
+  
+        }
+      );
+  
+      this._selectorService.selectorByProduct(_id).subscribe(
+        response =>{
+          this.selectores = response;
+          console.log(response);
+  
+        },
+        error=>{
+  
+        }
+      );
+      
+    }
+  
 
     add_to_cart(){
       if(this.cantidad_to_cart > this.producto.stock){
@@ -179,7 +223,7 @@ export class ProductComponent implements OnInit {
 
     addToCart(){
 
-      this.messageService.sendMessage(this.productoSeleccionado);
+      this.messageService.sendMessage(this.producto);
       console.log('sending item to cart...')
       this.msm_success = true;
     }

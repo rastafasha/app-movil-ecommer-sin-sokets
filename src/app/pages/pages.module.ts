@@ -44,7 +44,7 @@ import { DireccionEditComponent } from './usuario/direcciones/direccion-edit/dir
 import { NgxPayPalModule } from 'ngx-paypal';
 import { TicketIndexComponent } from './usuario/ticket-index/ticket-index.component';
 import { TicketChatComponent } from './usuario/ticket-chat/ticket-chat.component';
-
+import { ClipboardModule } from 'ngx-clipboard';
 @NgModule({
   declarations: [
     AccountSettingComponent,
@@ -114,7 +114,8 @@ import { TicketChatComponent } from './usuario/ticket-chat/ticket-chat.component
     ComponentsModule,
     ReactiveFormsModule,
     PipesModule,
-    NgxPayPalModule
+    NgxPayPalModule,
+    ClipboardModule
 
 
   ]

@@ -21,7 +21,7 @@ export class CategoryBarComponent implements OnInit {
 
   }
   loadCategories(){
-    this.categoriaService.getCategories().subscribe(
+    this.categoriaService.getCategoriesActivas().subscribe(
       resp => {
         this.categorias = resp;
         // console.log(this.categorias);

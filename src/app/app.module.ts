@@ -8,7 +8,7 @@ import { ComponentsModule } from './components/components.module';
 import { NopagefoundComponent } from './nopagefound/nopagefound.component';
 import { PagesModule } from './pages/pages.module';
 import { PipesModule } from './pipes/pipes.module';
-
+import { ClipboardModule } from 'ngx-clipboard';
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,6 +21,7 @@ import { PipesModule } from './pipes/pipes.module';
     AuthModule,
     ComponentsModule,
     PipesModule,
+    ClipboardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

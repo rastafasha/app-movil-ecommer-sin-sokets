@@ -9,6 +9,8 @@ import { StorageService } from 'src/app/services/storage.service';
 import { Producto } from 'src/app/models/producto.model';
 import { Usuario } from 'src/app/models/usuario.model';
 import { CartItemModel } from 'src/app/models/cart-item-model';
+import { FavoritoService } from 'src/app/services/favorito.service';
+import { Favorite } from 'src/app/models/favorite.model';
 
 declare var jQuery:any;
 declare var $:any;
@@ -39,12 +41,19 @@ export class SlideProductosHComponent implements OnInit {
   public productoSeleccionado: Producto;
 
   public msm_error_review='';
+  public msm_error = false;
+  public msm_success = false;
+  public msm_success_fav = false;
+  public msm_success_dos = false;
+
+  favoriteItem: Favorite;
 
   constructor(
     private productoService: ProductoService,
     private usuarioService : UsuarioService,
     private messageService: MessageService,
     private storageService: StorageService,
+    private favoritoService: FavoritoService,
 
     private router: Router
   ) {
@@ -57,7 +66,7 @@ export class SlideProductosHComponent implements OnInit {
 
   }
   loadProducts(){
-    this.productoService.getProductosActivos().subscribe(
+    this.productoService.getProductosActivosDestacados().subscribe(
       resp => {
         this.productos = resp;
         console.log(this.productos);
@@ -66,22 +75,37 @@ export class SlideProductosHComponent implements OnInit {
   }
 
 
-  addToCart(): void{
+  addToCart(prod:any): void{
+    this.productoSeleccionado = prod;
     this.messageService.sendMessage(this.productoSeleccionado);
-    console.log('sending item to cart...')
+    console.log('sending item to cart...', this.productoSeleccionado);
+    this.msm_success = true;
   }
 
 
 
 
-  addToFavorites(){
-    this.storageService.guardarProducto(this.productoSeleccionado);
-    console.log(this.productoSeleccionado);
+  addToFavorites(prod:any){
+    
+    this.productoSeleccionado = prod;
+    const data = {
+      producto: this.productoSeleccionado._id,
+      usuario: this.usuario.uid,
+    }
+    
+    this.favoritoService.registro(data ).subscribe((res:any)=>{
+      this.favoriteItem = res;
+      // console.log(this.favoriteItem);
+      console.log('sending...', this.productoSeleccionado.titulo)
+      // this.notificacion();
+      this.msm_success_fav = true;
+    });
   }
 
   close_alert(){
-    this.msm_error_review = '';
-
+    this.msm_error = false;
+    this.msm_success = false;
+    this.msm_success_fav = false;
   }
 
   close_toast(){

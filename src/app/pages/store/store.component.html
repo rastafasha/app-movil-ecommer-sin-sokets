@@ -3,10 +3,26 @@
         <a href="javascript:void(0)" (click)="goBack()"><i class="fa fa-angle-left"></i></a>
     </div>
     <div class="titlePage animated fadeIn">
-        <h3>Favorites</h3>
+        <h3>Store</h3>
     </div>
     <div class="container-fluid cuadro-modal animated fadeInUp">
         <div class="lineamedio"></div>
+        <!-- mensaje -->
+        <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="msm_success">
+            Producto agregado al carrito!.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <!-- mensaje -->
+        <!-- mensaje -->
+        <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="msm_success_fav">
+            Producto agregado a Favoritos!.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <!-- mensaje -->
         <div>
 
             <!----info-->
@@ -114,43 +130,46 @@
                     <br>
                     <br>
                     <h5>Productos </h5>
-                    <div class="carousel-inner-data">
-                        <div class="post navTabs" *ngFor="let producto of productos">
-
-                            <div class=" itemStore">
-                                <div class="group   productoitem">
-                                    <div class="favoritesdiv1">
-                                        <a href="product.html">
-                                            <img src="assets/images/zip_package1.png" alt="">
-                                        </a>
-                                    </div>
-
-                                    <div class="favoritesdiv2">
-                                        <p>{{producto.titulo}}</p>
-                                        <p>{{producto.categoria.nombre}}</p>
-                                        <div class="precio">
-                                            <p>$ {{producto.precio_antes}}</p>
-                                            <p>$ {{producto.precio_ahora}}</p>
+                    <div class="post-inner">
+                        <div class="carousel-inner-data">
+                            <div class="post navTabs" *ngFor="let producto of productos">
+    
+                                <div class=" itemStore">
+                                    <div class="group   productoitem">
+                                        <div class="favoritesdiv1">
+                                            <a [routerLink]="['/app/product', producto._id]">
+                                                <img [src]="producto.img | imagenPipe: 'productos'"alt="">
+                                            </a>
                                         </div>
-                                        <!-- <div class="stars">
-                                            <ul>
-                                                <li class="active"><i class="fa fa-star"></i></li>
-                                                <li class="active"><i class="fa fa-star"></i></li>
-                                                <li class="active"><i class="fa fa-star"></i></li>
-                                                <li class="active"><i class="fa fa-star"></i></li>
-                                                <li><i class="fa fa-star"></i></li>
-                                            </ul>
-                                        </div> -->
+    
+                                        <div class="favoritesdiv2">
+                                            <p>{{producto.titulo}}</p>
+                                            <p>{{producto.categoria.nombre}}</p>
+                                            <div class="precio">
+                                                <p>$ {{producto.precio_antes}}</p>
+                                                <p>$ {{producto.precio_ahora}}</p>
+                                            </div>
+                                            <!-- <div class="stars">
+                                                <ul>
+                                                    <li class="active"><i class="fa fa-star"></i></li>
+                                                    <li class="active"><i class="fa fa-star"></i></li>
+                                                    <li class="active"><i class="fa fa-star"></i></li>
+                                                    <li class="active"><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                </ul>
+                                            </div> -->
+                                        </div>
+                                        <div class="botones">
+                                            <button class="btn btn-primary" (click)="addToFavoritoos(producto)"><i class="fa fa-heart"></i></button>
+                                        <button class="btn btn-success" (click)="addToCart(producto)"><i class="fa fa-shopping-cart"></i></button>
+                                        </div>
+    
                                     </div>
-                                    <div class="botones">
-                                        <button class="btn btn-primary" (click)="addToFavoritoos(producto)"><i class="fa fa-heart"></i></button>
-                                    <button class="btn btn-success" (click)="addToCart()"><i class="fa fa-shopping-cart"></i></button>
-                                    </div>
-
                                 </div>
+    
                             </div>
-
                         </div>
+
                     </div>
                 </div>
                 <div class="div-responsive2">

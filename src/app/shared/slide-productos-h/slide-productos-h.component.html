@@ -5,7 +5,7 @@
                 <div class=" card shadow h-100 ">
                     <div class="ratio ratio-1x1 ">
                         <a [routerLink]="['/app/product', prod._id]">
-                            <img [src]="prod.poster | imagenPipe: 'productos'" class="card-img-top " loading="lazy " alt="{{prod.nombre}} ">
+                            <img [src]="prod.img | imagenPipe: 'productos'" class="card-img-top " loading="lazy " alt="{{prod.nombre}} ">
                         </a>
                     </div>
                     <div class="card-body d-flex flex-column flex-md-row ">
@@ -58,8 +58,11 @@
                                 <i class="fa fa-star"></i>
                             </div>
                         </div>
-                        <div class="button-add-cart " type="button " (click)="addToCart() ">
+                        <div class="button-add-cart " type="button " (click)="addToCart(prod) ">
                             <i class="fa fa-shopping-bag " id="myBtn "></i>
+                        </div>
+                        <div class="button-add-favorite " type="button " (click)="addToFavorites(prod) ">
+                            <i class="fa fa-heart " id="myBtn "></i>
                         </div>
                     </div>
                 </div>
@@ -72,12 +75,19 @@
     </div>
 </div>
 
-<div class="toast-container toast-top-right">
-    <div class="toast mb-3 fade hide" id="dark-toast" data-delay="5000" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header bg-accent text-white"><i class="czi-cart mr-2"></i>
-            <h6 class="font-size-sm text-white mb-0 mr-auto">Notificación</h6>
-            <button class="close text-white ml-2 mb-1" type="button" data-dismiss="toast" aria-label="Close" (click)="close_toast()"><span aria-hidden="true">×</span></button>
-        </div>
-        <div class="toast-body text-accent">Se agrego el producto al carrito.</div>
-    </div>
+ <!-- mensaje -->
+ <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="msm_success">
+    Producto agregado al carrito!.
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
 </div>
+<!-- mensaje -->
+ <!-- mensaje -->
+ <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="msm_success_fav">
+    Producto agregado a Favoritos!.
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<!-- mensaje -->

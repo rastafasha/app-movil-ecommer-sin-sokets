@@ -53,6 +53,14 @@ export class CategoryService {
 
   }
 
+  getCategoriesActivas() {
+    const url = `${base_url}/categorias/cat/activas`;
+    return this.http.get<any>(url, this.headers)
+      .pipe(
+        map((resp:{ok: boolean, categorias: Categoria[]}) => resp.categorias)
+      )
+  }
+
 
 
   listar(filtro):Observable<any>{

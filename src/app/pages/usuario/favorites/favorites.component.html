@@ -122,8 +122,8 @@
                                 <div class=" itemFav">
                                     <div class="group  itemFav lastposthome">
                                         <div class="favoritesdiv1">
-                                            <a href="product.html">
-                                                <img src="assets/images/zip_package1.png" alt="">
+                                            <a [routerLink]="['/app/product', item._id]">
+                                                <img [src]="item.img | imagenPipe: 'productos'" alt="">
                                             </a>
                                         </div>
 

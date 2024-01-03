@@ -66,7 +66,7 @@
                     <div class="div-responsive1 scrollable">
                         <div class="container">
                             <div class="text-center mb-4 pb-3 border-bottom">
-                                <h2 class="h6 mb-3 pb-1">Subtotal</h2>
+                                <h2 class="h6 mb-3 pb-1">Delivery</h2>
                                 <!-- <h3 class="font-weight-normal">${{total}}</h3> -->
                                 <h3 class="font-weight-normal">${{subtotal}}</h3>
                             </div>
@@ -135,10 +135,10 @@
                                         <div class="card-body">
 
                                             <div class="form-group">
-                                                <select class="form-control custom-select" required (change)="get_direccion()" [(ngModel)]="id_direccion">
+                                                <select class="form-control custom-select" required (change)="get_direccion(id_direccion)" [(ngModel)]="id_direccion">
                                       <option value="" selected disabled>Selecciona</option>
-                                      <ng-container *ngFor="let item of direcciones">
-                                        <option value="{{item._id}}">{{item.direccion}}</option>
+                                      <ng-container *ngFor="let direccion of direcciones">
+                                        <option value="{{direccion._id}}">{{direccion.direccion}}</option>
                                       </ng-container>
 
                                     </select>

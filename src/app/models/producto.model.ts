@@ -1,5 +1,7 @@
 import { environment } from 'src/environments/environment';
 import { Categoria } from './categoria.model';
+import { Color } from './color.model';
+import { Selector } from './selector.model';
 
 const base_url = environment.baseUrl;
 export class Producto {
@@ -12,7 +14,10 @@ export class Producto {
   stock: number;
   stars:number;
   categoria: Categoria;
+  color: Color;
+  selector: Selector;
   subcategoria: string;
+  nombre_selector: string;
   isFeatured: boolean;
   status: boolean;
   marca: string;

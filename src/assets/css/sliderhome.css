@@ -136,12 +136,36 @@
         float: right;
         display: flex;
         flex-direction: column;
-        bottom: -5px;
+        bottom: -20px;
         right: -10px;
         align-items: center;
     }
 
     .button-add-cart .fa {
+        color: var(--light-brown);
+        font-size: 22px;
+        text-align: center;
+        display: flex;
+        margin: auto;
+    }
+
+    .button-add-favorite {
+        position: absolute;
+        z-index: 20;
+        height: 50px;
+        width: 50px;
+        border-radius: 100px;
+        background-color: var(--dark-brown);
+        border: 2px solid #ffff;
+        float: right;
+        display: flex;
+        flex-direction: column;
+        bottom: -20px;
+        right: 40px;
+        align-items: center;
+    }
+
+    .button-add-favorite .fa {
         color: var(--light-brown);
         font-size: 22px;
         text-align: center;

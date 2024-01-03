@@ -50,6 +50,13 @@ export class CuponService {
       map((resp:{ok: boolean, cupon: Cupon}) => resp.cupon)
       );
   }
+  get_cuponCode(codigo):Observable<any>{
+    const url = `${base_url}/cupons/codigo/${codigo}`;
+    return this.http.get(url, this.headers)
+    .pipe(
+      map((resp:{ok: boolean, cupon: Cupon}) => resp.cupon)
+      );
+  }
 
   eliminar(_id):Observable<any>{
     const url = `${base_url}/cupons/${_id}`;

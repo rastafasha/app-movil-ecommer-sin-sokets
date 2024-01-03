@@ -52,6 +52,13 @@ export class ProductoService {
         map((resp:{ok: boolean, productos: Producto[]}) => resp.productos)
       )
   }
+  getProductosActivosDestacados() {
+    const url = `${base_url}/productos/destacados`;
+    return this.http.get<any>(url, this.headers)
+      .pipe(
+        map((resp:{ok: boolean, productos: Producto[]}) => resp.productos)
+      )
+  }
 
   getProductoById(_id: string){
     const url = `${base_url}/productos/${_id}`;

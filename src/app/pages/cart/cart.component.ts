@@ -7,7 +7,6 @@ import { Producto } from 'src/app/models/producto.model';
 import { MessageService } from 'src/app/services/message.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { Router } from '@angular/router';
-import { Usuario } from 'src/app/models/usuario.model';
 
 import { CuponService } from "src/app/services/cupons.service";
 import { PostalService } from "src/app/services/postal.service";
@@ -21,6 +20,7 @@ import { environment } from '../../../environments/environment';
 
 declare var jQuery:any;
 declare var $:any;
+declare var paypal;
 
 @Component({
   selector: 'app-cart',
@@ -34,7 +34,7 @@ export class CartComponent implements OnInit {
   public producto : Producto;
 
   public carrito : Array<any> = [];
-  public direcciones;
+  public direcciones:any =[];
   public identity;
   public cupon;
   public msm_error_cupon=false;
@@ -94,11 +94,34 @@ export class CartComponent implements OnInit {
     window.scrollTo(0,0);
     this.closeModal();
 
+    this.listar_direcciones();
     this.listar_postal();
     this.listar_carrito();
-    this.listar_direcciones();
 
     this.initConfig();
+  }
+
+  listar_direcciones(){
+    this._direccionService.listarUsuario(this.identity.uid).subscribe(
+      response =>{
+        this.direcciones = response.direcciones;
+        console.log(this.direcciones);
+      },
+      error=>{
+
+      }
+    );
+  }
+
+  get_direccion(id_direccion:any){debugger
+    this.data_direccion = id_direccion;
+    this._direccionService.get_direccion(this.data_direccion).subscribe(
+      response =>{
+        this.data_direccion = response;
+        console.log(this.data_direccion);
+      }
+    );
+
   }
 
   private initConfig(){
@@ -172,6 +195,8 @@ export class CartComponent implements OnInit {
         onClientAuthorization: (data) => {
             console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point',
             JSON.stringify(data));
+            // datos del recibo de pago
+            
             // this.openModal(
             //   data.purchase_units[0].items,
             //   data.purchase_units[0].amount.value,
@@ -218,18 +243,6 @@ export class CartComponent implements OnInit {
     );
   }
 
-  listar_direcciones(){
-    this._direccionService.listarUsuario(this.identity.uid).subscribe(
-      response =>{
-        this.direcciones = response.direcciones;
-      },
-      error=>{
-
-      }
-    );
-  }
-
-
   listar_carrito(){
     this._carritoService.preview_carrito(this.identity.uid).subscribe(
       response =>{
@@ -257,19 +270,6 @@ export class CartComponent implements OnInit {
     );
   }
 
-  get_direccion(){
-
-    this._direccionService.get_direccion(this.id_direccion).subscribe(
-      response =>{
-        this.data_direccion = response.direccion;
-        console.log(this.data_direccion);
-      },
-      error=>{
-
-      }
-    );
-  }
-
   get_data_cupon(event,cupon){
     this.data_keyup = this.data_keyup + 1;
 
@@ -277,9 +277,9 @@ export class CartComponent implements OnInit {
       if(cupon.length == 13){
         console.log('siii');
 
-        this._cuponService.get_cupon(cupon).subscribe(
+        this._cuponService.get_cuponCode(cupon).subscribe(
           response =>{
-            this.data_cupon = response.cupone;
+            this.data_cupon = response.cupon;
 
             this.msm_error_cupon = false;
             this.msm_success_cupon = true;
@@ -395,7 +395,7 @@ export class CartComponent implements OnInit {
 
       this.data_venta = {
         user : this.identity._id,
-        total_pagado : this.subtotal,
+        total_pagado : this.total,
         codigo_cupon : this.cupon,
         info_cupon :  this.info_cupon_string,
         idtransaccion : null,
@@ -404,14 +404,15 @@ export class CartComponent implements OnInit {
         tipo_envio: this.medio_postal.tipo_envio,
         precio_envio: this.medio_postal.precio,
         tiempo_estimado: this.date_string,
+        
+        destinatario: this.identity.name,
+        detalles:this.data_detalle,
 
         direccion: this.data_direccion.direccion,
-        destinatario: this.data_direccion.nombres_completos,
         referencia: this.data_direccion.referencia,
         pais: this.data_direccion.pais,
         ciudad: this.data_direccion.ciudad,
         zip: this.data_direccion.zip,
-        detalles:this.data_detalle
       }
 
       console.log(this.data_venta);

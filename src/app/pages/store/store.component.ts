@@ -21,7 +21,11 @@ export class StoreComponent implements OnInit {
   public usuario: Usuario;
   public producto: Producto;
   favoriteItem: Favorite;
+  public msm_error = false;
   public msm_success = false;
+  public msm_success_fav = false;
+
+  productoSeleccionado:Producto;
 
   constructor(
     public productService:ProductoService,
@@ -57,34 +61,41 @@ export class StoreComponent implements OnInit {
     this.location.back(); // <-- go back to previous location on cancel
   }
 
-  addToFavorites(producto){
+  // addToFavorites(producto){
     
-    this.producto = producto
-    this.usuario.uid = this.usuario.uid
+  //   this.producto = producto
+  //   this.usuario.uid = this.usuario.uid
               
-      const data = {
-        producto: this.producto._id,
-        usuario: this.usuario.uid,
-      }
+  //     const data = {
+  //       producto: this.producto._id,
+  //       usuario: this.usuario.uid,
+  //     }
       
-      this.favoritoService.registro(data ).subscribe((res:any)=>{
-        this.favoriteItem = res;
-        // console.log(this.favoriteItem);
-        console.log('sending...', this.producto)
-        // this.notificacion();
+  //     this.favoritoService.registro(data ).subscribe((res:any)=>{
+  //       this.favoriteItem = res;
+  //       // console.log(this.favoriteItem);
+  //       console.log('sending...', this.producto)
+  //       // this.notificacion();
         
-      });
+  //     });
     
-  }
+  // }
 
-  addToFavoritoos(producto){debugger
-    if(!this.favoritoService.existeEnFavoritos(producto)){
-      const nuevoFavorito : Favorite= new Favorite(null)
-      this.favoritoService.registro(nuevoFavorito).subscribe((resp:any)=>{})
-          
-    }else{
-      this.removeFavorito(producto._id);
+  addToFavoritoos(producto){
+    this.productoSeleccionado = producto;
+    const data = {
+      producto: this.productoSeleccionado._id,
+      usuario: this.usuario.uid,
     }
+    
+    this.favoritoService.registro(data ).subscribe((res:any)=>{
+      this.favoriteItem = res;
+      // console.log(this.favoriteItem);
+      console.log('sending...', this.productoSeleccionado.titulo)
+      // this.notificacion();
+      this.msm_success_fav = true;
+      
+    });
     
   }
 
@@ -99,11 +110,16 @@ export class StoreComponent implements OnInit {
   }
 
 
-  addToCart(){debugger
-
+  addToCart(producto:any): void{
+    this.producto = producto;
     this.messageService.sendMessage(this.producto);
-    console.log('sending item to cart...', this.producto)
+    console.log('sending item to cart...', this.producto);
     this.msm_success = true;
   }
-  
+
+  close_alert(){
+    this.msm_error = false;
+    this.msm_success = false;
+    this.msm_success_fav = false;
+  }
 }

@@ -7,7 +7,7 @@
 
     <!--slideproduct-->
     <div class="product-item  animated bounce">
-        <img [src]="productoSeleccionado.img | imagenPipe: 'productos'" alt="">
+        <img [src]="producto.img | imagenPipe: 'productos' " alt="">
     </div>
     <!--slideproduct-->
     <!--cuadromodal-->
@@ -16,51 +16,51 @@
 
         <div class="card-body cardTitleProduct ">
             <div class="div1 animated fadeInUp">
-                <h1>{{productoSeleccionado.titulo}}</h1>
+                <h1>{{producto.titulo}}</h1>
             </div>
             <div class="div2 animated fadeInUp">
-                <div class="price">${{productoSeleccionado.precio_ahora}}</div>
-                <div class="reduceprice">${{productoSeleccionado.precio_antes}}</div>
+                <div class="price">${{producto.precio_ahora}}</div>
+                <div class="reduceprice">${{producto.precio_antes}}</div>
             </div>
             <div class="div3 animated fadeInUp">
-                <i class="fa fa-heart" (click)="addToFavorites(productoSeleccionado)"></i>
+                <i class="fa fa-heart" (click)="addToFavorites(producto)"></i>
                 <div class="stars">
-                    <div class="star-rating" *ngIf="productoSeleccionado.stars == 5">
+                    <div class="star-rating" *ngIf="producto.stars == 5">
                         <i class="fa fa-star active"></i>
                         <i class="fa fa-star active"></i>
                         <i class="fa fa-star active"></i>
                         <i class="fa fa-star active"></i>
                         <i class="fa fa-star active"></i>
                     </div>
-                    <div class="star-rating" *ngIf="productoSeleccionado.stars >= 4 && productoSeleccionado.stars < 5">
+                    <div class="star-rating" *ngIf="producto.stars >= 4 && producto.stars < 5">
                         <i class="fa fa-star active"></i>
                         <i class="fa fa-star active"></i>
                         <i class="fa fa-star active"></i>
                         <i class="fa fa-star active"></i>
                         <i class="fa fa-star"></i>
                     </div>
-                    <div class="star-rating" *ngIf="productoSeleccionado.stars >= 3 && productoSeleccionado.stars < 4">
+                    <div class="star-rating" *ngIf="producto.stars >= 3 && producto.stars < 4">
                         <i class="fa fa-star active"></i>
                         <i class="fa fa-star active"></i>
                         <i class="fa fa-star active"></i>
                         <i class="fa fa-star"></i>
                         <i class="fa fa-star"></i>
                     </div>
-                    <div class="star-rating" *ngIf="productoSeleccionado.stars >= 2 && productoSeleccionado.stars < 3">
+                    <div class="star-rating" *ngIf="producto.stars >= 2 && producto.stars < 3">
                         <i class="fa fa-star active"></i>
                         <i class="fa fa-star active"></i>
                         <i class="fa fa-star"></i>
                         <i class="fa fa-star"></i>
                         <i class="fa fa-star"></i>
                     </div>
-                    <div class="star-rating" *ngIf="productoSeleccionado.stars >= 1 && productoSeleccionado.stars < 2">
+                    <div class="star-rating" *ngIf="producto.stars >= 1 && producto.stars < 2">
                         <i class="fa fa-star "></i>
                         <i class="fa fa-star"></i>
                         <i class="fa fa-star"></i>
                         <i class="fa fa-star"></i>
                         <i class="fa fa-star"></i>
                     </div>
-                    <div class="star-rating" *ngIf="productoSeleccionado.stars >= 0 && productoSeleccionado.stars < 1">
+                    <div class="star-rating" *ngIf="producto.stars >= 0 && producto.stars < 1">
                         <i class="fa fa-star"></i>
                         <i class="fa fa-star"></i>
                         <i class="fa fa-star"></i>
@@ -76,20 +76,20 @@
 
         <div class="info-product animated fadeInUp scrollable">
             <h4>Descripción:</h4>
-            <p>{{productoSeleccionado.info_short}}</p>
+            <p>{{producto.info_short}}</p>
             <br>
             <hr>
             <br>
             <h4>Detalle:</h4>
-            <p [innerHTML]="productoSeleccionado.detalle"></p>
+            <p [innerHTML]="producto.detalle"></p>
             <br>
             <hr>
             <br>
             <ul>
-                <li>Art Disponible: {{productoSeleccionado.stock}}</li>
-                <!-- <li>Categoria: {{productoSeleccionado.categoria.nombre}}</li> -->
-                <li>SubCategoria: {{productoSeleccionado.subcategoria}}</li>
-                <li>Marca: {{productoSeleccionado.marca}} </li>
+                <li>Art Disponible: {{producto.stock}}</li>
+                <!-- <li>Categoria: {{producto.categoria.nombre}}</li> -->
+                <li>SubCategoria: {{producto.subcategoria}}</li>
+                <li>Marca: {{producto.marca}} </li>
                 <!-- <li>Serie Code</li>
                 <li>Venta al Mayor</li>
                 <li>Multiple Products</li>
@@ -104,9 +104,29 @@
             <br>
             <hr>
             <br>
-            <div *ngIf="productoSeleccionado.video_review">
+            <div class="font-size-sm">
+                <span class="text-heading font-weight-medium mr-1">
+                Colores:</span>
+                <span class="text-muted listacolor" id="colorOption">
+                    <ng-container *ngFor="let color of colores; let indice = first">
+                    <ng-container *ngIf="indice"><i  [style.background]="color.color"></i>{{color.titulo}}</ng-container>
+                    <ng-container *ngIf="!indice">/ <i  [style.background]="color.color"></i> {{color.titulo}}</ng-container>
+                    </ng-container>
+                </span>
+            </div>
+            <div class="font-size-sm">
+                <span class="text-heading font-weight-medium mr-1">
+                {{producto.nombre_selector}}:</span>
+                <span class="text-muted listacolor" id="colorOption">
+                    <ng-container *ngFor="let selector of selectores; let indice = first">
+                    <ng-container *ngIf="indice">{{selector.titulo}}</ng-container>
+                    <ng-container *ngIf="!indice">/  {{selector.titulo}}</ng-container>
+                    </ng-container>
+                </span>
+            </div>
+            <div *ngIf="producto.video_review">
                 <h3>Video review:</h3>
-                <iframe [src]="getVideoIframe(productoSeleccionado.video_review)" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; " allowfullscreen></iframe>
+                <iframe [src]="getVideoIframe(producto.video_review)" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; " allowfullscreen></iframe>
             </div>
             <br>
 
@@ -149,7 +169,7 @@
                 </div>
             </div>
 
-            <!-- <a class="tn btn-primary btn-sm btn-block mb-2" (click)="get_galeria(productoSeleccionado)" style="cursor: pointer;" data-toggle="modal" [attr.data-target]="'#preview-'+productoSeleccionado._id"><i class="czi-eye align-middle mr-1"></i>Vista previa</a> -->
+            <!-- <a class="tn btn-primary btn-sm btn-block mb-2" (click)="get_galeria(producto)" style="cursor: pointer;" data-toggle="modal" [attr.data-target]="'#preview-'+productoSeleccionado._id"><i class="czi-eye align-middle mr-1"></i>Vista previa</a> -->
 
 
             <!-- mensaje -->

@@ -26,17 +26,19 @@
                                         <th>Descuento</th>
                                     </tr>
                                 </thead>
-                                <tbody *ngFor="let item of cupones">
+                                <tbody *ngFor="let cupon of cupones">
                                     <tr>
 
                                         <td>
                                             <blockquote class="blockquote">
-                                                <p class="mb-2">{{item.codigo}}</p>
-
+                                                <div #container>
+                                                    <!-- <p class="mb-2">{{item.codigo}}</p> -->
+                                                    <button (click)="copyText(cupon.codigo)" title="Copy to Clipboard">{{cupon.codigo}}</button>
+                                                  </div>
                                             </blockquote>
                                         </td>
                                         <td>
-                                            {{item.tipo}} del {{item.descuento}}%
+                                            {{cupon.tipo}} del {{cupon.descuento}}%
                                         </td>
                                     </tr>
 

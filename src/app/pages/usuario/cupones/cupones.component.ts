@@ -4,6 +4,8 @@ import { HttpBackend, HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute, ParamMap} from '@angular/router';
 
 import { CuponService } from 'src/app/services/cupons.service';
+import { ClipboardService } from 'ngx-clipboard';
+import { Cupon } from 'src/app/models/cupon.model';
 
 @Component({
   selector: 'app-cupones',
@@ -12,7 +14,9 @@ import { CuponService } from 'src/app/services/cupons.service';
 export class CuponesComponent implements OnInit {
 
   public cupones;
+  cupon:Cupon;
 
+  content = 'Hello, i am tiny text and copied from somewhere else :)';
 
   constructor(
     private http: HttpClient,
@@ -20,6 +24,7 @@ export class CuponesComponent implements OnInit {
     private cuponService : CuponService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
+    private clipboardApi: ClipboardService,
     handler: HttpBackend
     ) {
       this.http = new HttpClient(handler);
@@ -31,7 +36,11 @@ export class CuponesComponent implements OnInit {
     this.closeMenu();
   }
 
-
+  copyText(cupon) {debugger
+    this.content = cupon;
+    this.clipboardApi.copyFromContent(this.content)
+    console.log(this.content);
+  }
 
   listarCupon(){
     this.cuponService.listar().subscribe(

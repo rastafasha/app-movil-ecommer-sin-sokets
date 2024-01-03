@@ -80,6 +80,8 @@ img {
 
 .favoritesdiv2 {
     grid-area: 1 / 2 / 2 / 3;
+    display: grid;
+    grid-template-columns: 50% 30% 20%;
 }
 
 .favorites .navTabs {

@@ -86,7 +86,13 @@
     border-radius: 20px 20px 0px 0px;
 }
 
-.categorylist {}
+.categorylist {
+    position: relative;
+    top: 40px;
+    transition: all ease .3s;
+}
+
+
 
 .categorylist {
     grid-auto-columns: calc(44% - (var(--swiffy-slider-item-gap)/ 2) - 2.5rem)!important;
